@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DAKE Network</title>
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Cinzel', serif; /* Gothic, luxurious font */
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #2a2a2a 100%); /* Dark gradient */
+            color: #f0f0f0; /* Light text for contrast */
+            overflow-x: hidden;
+            position: relative;
+        }
+        /* Enhanced horror overlay with parallax */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 50% 50%, rgba(65, 105, 225, 0.1) 0%, transparent 70%), /* Blue glow for luxury */
+                url('https://example.com/skull-texture.png') repeat; /* Replace with your horror texture */
+            opacity: 0.1; /* Slightly more visible for decoration */
+            z-index: -1;
+            transform: translateZ(0); /* Enable hardware acceleration for parallax */
+        }
+        /* Parallax effect on scroll */
+        @media (prefers-reduced-motion: no-preference) {
+            body::before {
+                transform: translateY(var(--scroll-y, 0));
+                transition: transform 0.1s ease-out;
+            }
+        }
+        /* Fog/mist overlay */
+        .fog {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.05) 50%, transparent 100%);
+            animation: drift 20s infinite linear;
+            z-index: -1;
+            pointer-events: none;
+        }
+        @keyframes drift {
+            0% { transform: translateX(-100%); opacity: 0; }
+            50% { opacity: 0.5; }
+            100% { transform: translateX(100%); opacity: 0; }
+        }
+        /* Animated particles for decoration */
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(65, 105, 225, 0.5); /* Blue for luxury */
+            border-radius: 50%;
+            animation: float 10s infinite linear;
+            z-index: -1;
+        }
+        .particle:nth-child(odd) {
+            background: rgba(255, 0, 0, 0.3); /* Red for horror */
+            animation-duration: 12s;
+        }
+        .particle:nth-child(3n) {
+            width: 6px;
+            height: 6px;
+            background: rgba(65, 105, 225, 0.7);
+            animation: fadeFloat 15s infinite ease-in-out;
+        }
+        .particle:nth-child(5n) {
+            width: 8px;
+            height: 8px;
+            background: rgba(255, 0, 0, 0.4);
+            border-radius: 0; /* Make some square for variety */
+        }
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+        @keyframes fadeFloat {
+            0%, 100% { transform: translateY(100vh) scale(0.5); opacity: 0; }
+            50% { transform: translateY(50vh) scale(1); opacity: 0.8; }
+        }
+        /* Luxury effects: blue accents */
+        .luxury-accent {
+            color: #4169e1; /* Royal blue */
+            text-shadow: 0 0 10px rgba(65, 105, 225, 0.5); /* Blue glow */
+            animation: pulse 3s infinite ease-in-out; /* Pulsing glow */
+        }
+        @keyframes pulse {
+            0%, 100% { text-shadow: 0 0 10px rgba(65, 105, 225, 0.5); }
+            50% { text-shadow: 0 0 20px rgba(65, 105, 225, 1), 0 0 30px rgba(255, 0, 0, 0.5); }
+        }
+        /* Header */
+        header {
+            text-align: center;
+            padding: 50px 20px;
+            background: rgba(0, 0, 0, 0.8); /* Semi-transparent overlay */
+            border-bottom: 2px solid #4169e1; /* Blue border */
+            position: relative;
+            z-index: 1;
+        }
+        .logo {
+            width: 150px; /* Adjust size as needed */
+            height: auto;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 10px rgba(65, 105, 225, 0.5)); /* Blue glow effect */
+        }
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .tagline {
+            font-size: 1.2rem;
+            opacity: 0.8;
+        }
+        /* Main content */
+        main {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        .links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+        .link-item {
+            background: rgba(255, 255, 255, 0.1); /* Semi-transparent */
+            border: 1px solid #4169e1; /* Blue border */
+            border-radius: 10px;
+            padding: 20px;
+            width: 150px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .link-item::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(65, 105, 225, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+            z-index: -1;
+        }
+        .link-item:hover::before {
+            width: 300px;
+            height: 300px; /* Ripple effect */
+        }
+        .link-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(65, 105, 225, 0.8), 0 0 50px rgba(255, 0, 0, 0.5); /* Enhanced shadow */
+        }
+        .link-item a {
+            text-decoration: none;
+            color: #f0f0f0;
+            font-size: 1.1rem;
+            display: block;
+        }
+        .link-item img {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 10px;
+        }
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            border-top: 2px solid #4169e1; /* Blue border */
+            margin-top: 50px;
+            position: relative;
+            z-index: 1;
+        }
+        /* Responsive design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            .logo {
+                width: 100px;
+            }
+            .links {
+                flex-direction: column;
+                align-items: center;
+            }
+            .link-item {
+                width: 80%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Optional ambient sound (uncomment to enable) -->
+    <!-- <audio autoplay loop>
+        <source src="https://example.com/eerie-ambient.mp3" type="audio/mpeg">
+    </audio> -->
+
+    <!-- Fog overlay -->
+    <div class="fog"></div>
+
+    <!-- Animated particles for background decoration -->
+    <div class="particle" style="left: 10%; animation-delay: 0s;"></div>
+    <div class="particle" style="left: 20%; animation-delay: 2s;"></div>
+    <div class="particle" style="left: 30%; animation-delay: 4s;"></div>
+    <div class="particle" style="left: 40%; animation-delay: 6s;"></div>
+    <div class="particle" style="left: 50%; animation-delay: 8s;"></div>
+    <div class="particle" style="left: 60%; animation-delay: 1s;"></div>
+    <div class="particle" style="left: 70%; animation-delay: 3s;"></div>
+    <div class="particle" style="left: 80%; animation-delay: 5s;"></div>
+    <div class="particle" style="left: 90%; animation-delay: 7s;"></div>
+    <div class="particle" style="left: 15%; animation-delay: 9s;"></div>
+    <div class="particle" style="left: 25%; animation-delay: 1.5s;"></div>
+    <div class="particle" style="left: 35%; animation-delay: 3.5s;"></div>
+    <div class="particle" style="left: 45%; animation-delay: 5.5s;"></div>
+    <div class="particle" style="left: 55%; animation-delay: 7.5s;"></div>
+    <div class="particle" style="left: 65%; animation-delay: 0.5s;"></div>
+    <div class="particle" style="left: 75%; animation-delay: 2.5s;"></div>
+    <div class="particle" style="left: 85%; animation-delay: 4.5s;"></div>
+    <div class="particle" style="left: 95%; animation-delay: 6.5s;"></div>
+    <div class="particle" style="left: 5%; animation-delay: 8.5s;"></div>
+    <div class="particle" style="left: 85%; animation-delay: 10s;"></div>
+
+    <header>
+        <img src="..." alt="DAKE Network Logo" class="logo"> <!-- Replace "..." with your image URL -->
+        <h1 class="luxury-accent">DAKE Network</h1>
+        <p class="tagline">These are my accounts on social media. Please subscribe.</p>
+    </header>
+    <main>
+        <h2>Connect with Us</h2>
+        <div class="links">
+            <div class="link-item">
+                <img src="https://www.mediafire.com/file/lwreavvkhqisepi/channels4_profile.jpg/file" alt="YouTube">
+                <a href="https://youtube.com/@dake_king1?si=sk3fLUxRFLt6Om78" target="_blank">YouTube</a>
+            </div>
+            <div class="link-item">
+                <img src="https://example.com/tiktok-icon.png" alt="TikTok">
+                <a href="https://www.tiktok.com/@dake_gaming?is_from_webapp=1&sender_device=pc" target="_blank">TikTok</a>
+            </div>
+            <div class="link-item">
+                <img src="https://example.com/instagram-icon.png" alt="Instagram">
+                <a href="https://www.instagram.com/x_ra2d_x_18?igsh=NXc1dDFscW50Y3U2" target="_blank">Instagram</a>
+            </div>
+            <div class="link-item">
+                <img src="https://example.com/discord-icon.png" alt="Discord">
+                <a href="https://discord.gg/n6Jg7mtg" target="_blank">Discord</a>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2023 DAKE Network. All rights reserved.</p>
+    </footer>
+
+    <!-- JavaScript for parallax (optional, enhances scroll effect) -->
+    <script>
+        window.addEventListener('scroll', () => {
+            document.body.style.setProperty('--scroll-y', `${window.scrollY * 0.5}px`);
+        });
+    </script>
+</body>
+</html>
